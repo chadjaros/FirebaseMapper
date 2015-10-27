@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import Firebase
 
 class TestModel: Mappable<TestModel> {
 
@@ -22,16 +23,16 @@ class TestModel: Mappable<TestModel> {
             { return $0.count },
             { $0.count = $1 }
     )
-    override class func classMap() -> ModelMapping<TestModel> {
-
-        return ModelMapping<TestModel>(
-            firebaseUri: "http://my.firebase.com/testModel/{id}",
-            properties: [
-                colorProperty,
-                sizeProperty,
-                countProperty
-            ]
-        )
+    static let modelMap = ModelMapping<TestModel>(
+        firebaseUri: "http://my.firebase.com/testModel/{id}",
+        properties: [
+            colorProperty,
+            sizeProperty,
+            countProperty
+        ]
+    )
+    override class func modelMapping() -> ModelMapping<TestModel> {
+        return modelMap
     }
 
     private(set) var color: String
@@ -44,4 +45,6 @@ class TestModel: Mappable<TestModel> {
         self.count = count
         super.init(id:id)
     }
+
+
 }

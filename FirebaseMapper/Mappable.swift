@@ -12,7 +12,7 @@ protocol IDable {
 
 class Mappable<T>: IDable {
 
-    class func classMap() -> ModelMapping<T>!  {
+    class func modelMapping() -> ModelMapping<T>!  {
         return nil
     }
     

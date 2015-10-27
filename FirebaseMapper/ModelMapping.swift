@@ -12,13 +12,13 @@ class ModelMapping<T>: NSObject {
 
     let firebaseUriBase:String;
     
-    private let firebaseToProperty: Dictionary<String, PropertyMappingBase<T>>
-    private let propertyToFirebase: Dictionary<PropertyMappingBase<T>, String>
+    private let firebaseToProperty: Dictionary<String, BasePropertyMapping<T>>
+    private let propertyToFirebase: Dictionary<BasePropertyMapping<T>, String>
 
-    init(firebaseUri: String, properties: [PropertyMappingBase<T>]){
+    init(firebaseUri: String, properties: [BasePropertyMapping<T>]){
         self.firebaseUriBase = firebaseUri;
-        var firebaseMap = Dictionary<String, PropertyMappingBase<T>>()
-        var propertyMap = Dictionary<PropertyMappingBase<T>, String>()
+        var firebaseMap = Dictionary<String, BasePropertyMapping<T>>()
+        var propertyMap = Dictionary<BasePropertyMapping<T>, String>()
 
         for property in properties {
             let fireUri = self.firebaseUriBase + property.firebaseUri
@@ -48,11 +48,11 @@ class ModelMapping<T>: NSObject {
         set(instance, self.firebaseToProperty[template] as! PropertyMapping<T, U>, value);
     }
     
-    func firebaseUri(instance: T, _ property: PropertyMappingBase<T>) -> String {
+    func firebaseUri(instance: T, _ property: BasePropertyMapping<T>) -> String {
         return firebaseUriFullFromTemplate(instance, firebaseUriTemplate(property));
     }
     
-    func firebaseUriTemplate(property: PropertyMappingBase<T>) -> String {
+    func firebaseUriTemplate(property: BasePropertyMapping<T>) -> String {
         return self.propertyToFirebase[property]!;
     }
     

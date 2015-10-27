@@ -8,16 +8,7 @@
 
 import UIKit
 
-class PropertyMappingBase<T>: NSObject {
-
-    let firebaseUri:String;
-
-    init(_ firebaseUri: String) {
-        self.firebaseUri = firebaseUri;
-    }
-}
-
-class PropertyMapping<T, U>: PropertyMappingBase<T> {
+class PropertyMapping<T, U>: BasePropertyMapping<T> {
 
     typealias Setter = (T, U) -> Void;
     typealias Getter = (T) -> U;

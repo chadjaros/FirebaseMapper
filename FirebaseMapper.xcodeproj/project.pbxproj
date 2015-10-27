@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		36425F6A544553B54B56C3A6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA14D7423FDDB36F92B43FB /* libPods.a */; };
+		2E9340551F65D38E0F62F91E /* ArrayPropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934BD5C6E8B535E2B4AE68 /* ArrayPropertyMapping.swift */; };
+		2E93425145C251C96CF95D97 /* BasePropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934A784E25C306F72C4040 /* BasePropertyMapping.swift */; };
+		32FCB1C2C4CC4660888C9B4D /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E8A38AA0C7C78B5698A227C /* Pods.framework */; };
 		637EED7A1BE017DF005F3032 /* Codec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EED781BE017DF005F3032 /* Codec.swift */; settings = {ASSET_TAGS = (); }; };
 		637EED7B1BE017DF005F3032 /* StringCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EED791BE017DF005F3032 /* StringCodec.swift */; settings = {ASSET_TAGS = (); }; };
 		637EED7D1BE017E4005F3032 /* TestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EED7C1BE017E4005F3032 /* TestModel.swift */; settings = {ASSET_TAGS = (); }; };
@@ -31,7 +33,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1BA14D7423FDDB36F92B43FB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E934A784E25C306F72C4040 /* BasePropertyMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasePropertyMapping.swift; sourceTree = "<group>"; };
+		2E934BD5C6E8B535E2B4AE68 /* ArrayPropertyMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayPropertyMapping.swift; sourceTree = "<group>"; };
+		4E8A38AA0C7C78B5698A227C /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		637EED781BE017DF005F3032 /* Codec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Codec.swift; path = Codecs/Codec.swift; sourceTree = "<group>"; };
 		637EED791BE017DF005F3032 /* StringCodec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringCodec.swift; path = Codecs/StringCodec.swift; sourceTree = "<group>"; };
 		637EED7C1BE017E4005F3032 /* TestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestModel.swift; path = Example/TestModel.swift; sourceTree = "<group>"; };
@@ -54,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36425F6A544553B54B56C3A6 /* libPods.a in Frameworks */,
+				32FCB1C2C4CC4660888C9B4D /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +121,8 @@
 				639A982E1BE0166E00E58345 /* PropertyMapping.swift */,
 				637EED761BE017C6005F3032 /* Codecs */,
 				637EED771BE017D4005F3032 /* Example */,
+				2E934BD5C6E8B535E2B4AE68 /* ArrayPropertyMapping.swift */,
+				2E934A784E25C306F72C4040 /* BasePropertyMapping.swift */,
 			);
 			path = FirebaseMapper;
 			sourceTree = "<group>";
@@ -142,7 +148,7 @@
 		DFD6B5DF8DC300BDACF105AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1BA14D7423FDDB36F92B43FB /* libPods.a */,
+				4E8A38AA0C7C78B5698A227C /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -297,6 +303,8 @@
 				639A98361BE0166E00E58345 /* Error.swift in Sources */,
 				637EED7B1BE017DF005F3032 /* StringCodec.swift in Sources */,
 				639A98351BE0166E00E58345 /* Mappable.swift in Sources */,
+				2E9340551F65D38E0F62F91E /* ArrayPropertyMapping.swift in Sources */,
+				2E93425145C251C96CF95D97 /* BasePropertyMapping.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
