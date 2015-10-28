@@ -5,12 +5,7 @@
 
 import Foundation
 
-protocol Constructable: SingleId {
-
-    init(id: String, copy: Self?)
-}
-
-class CollectionItem: Constructable {
+class CollectionItem: SingleId {
 
     let id: String
 
