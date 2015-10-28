@@ -19,7 +19,6 @@ final class Line: CollectionItem {
         self.color = cast?.color ?? ""
         super.init(id: id)
     }
-
 }
 
 class LineCodec: DictionaryCodec<Line> {

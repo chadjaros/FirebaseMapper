@@ -31,8 +31,8 @@ class FirebaseConnection<T> {
                 firebases[url] = propertyFirebase
                 if (property.isCollection) {
                     propertyFirebase.observeEventType(.ChildAdded, withBlock: didAddChild)
-//                    propertyFirebase.observeEventType(.ChildRemoved, withBlock: didRemoveChild)
-//                    propertyFirebase.observeEventType(.ChildChanged, withBlock: didUpdateChild)
+                    propertyFirebase.observeEventType(.ChildRemoved, withBlock: didRemoveChild)
+                    propertyFirebase.observeEventType(.ChildChanged, withBlock: didUpdateChild)
                 }
                 else {
                     propertyFirebase.observeEventType(.Value, withBlock: didUpdateValue)
@@ -46,6 +46,13 @@ class FirebaseConnection<T> {
             firebase.removeAllObservers()
         }
     }
+
+    // data.value can be
+    // - String
+    // - Number
+    // - Dictionary<String, String|Number|Dictionary>
+    //
+    // TODO: Need to handle these intelligently
 
     private func didUpdateValue(data: FDataSnapshot!)  {
         let firebaseUrl = data.ref.description
@@ -70,10 +77,10 @@ class FirebaseConnection<T> {
         return value
     }
 
-//    private func didRemoveChild(data: FDataSnapshot!)  {
-//        let firebaseUrl = data.ref.description
-//        self.mapping.removeChild(self.instance, firebaseUrl, data.value)
-//    }
+    private func didRemoveChild(data: FDataSnapshot!)  {
+        let firebaseUrl = data.ref.description
+        self.mapping.removeChild(self.instance, firebaseUrl, data.value as! [String: String])
+    }
 
     func removeChild<U>(property: CollectionPropertyMapping<T, U>, _ value: U) {
         let firebase = firebases[self.mapping.fullUrl(self.instance, property)]
@@ -81,10 +88,10 @@ class FirebaseConnection<T> {
         childFirebase?.removeValue()
     }
 
-//    private func didUpdateChild(data: FDataSnapshot!)  {
-//        let firebaseUrl = data.ref.description
-//        self.mapping.updateChild(self.instance, firebaseUrl, data.value)
-//    }
+    private func didUpdateChild(data: FDataSnapshot!)  {
+        let firebaseUrl = data.ref.description
+        self.mapping.updateChild(self.instance, firebaseUrl, data.value as! [String: String])
+    }
 
     func upsertChild<U>(property: CollectionPropertyMapping<T, U>, _ value: U) {
         let firebase = firebases[self.mapping.fullUrl(self.instance, property)]

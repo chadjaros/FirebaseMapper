@@ -65,13 +65,28 @@ class ModelMapping<T>: NSObject {
 
     func addChild(instance: T, _ url: String, _ child: [String: String]) {
         let template = urlTemplateFromFull(instance, url)
-        let property = self.urlTemplateToProperty[template]!
-        let v = property as! CollectionPropertyMapping<T, CollectionItem>
-        v.addChild(instance, child: v.codec.decode(child))
+        let property = self.urlTemplateToProperty[template]! as! CollectionPropertyMapping<T, CollectionItem>
+        addChild(instance, property, property.codec.decode(child))
     }
 
-    func addChild<U>(instance: T, _ property: PropertyMapping<T>, _ child: [String: String], type: U.Type) {
+    func updateChild<U>(instance: T, _ property: CollectionPropertyMapping<T, U>, _ child: U) {
+        property.updateChild(instance, child: child)
+    }
 
+    func updateChild(instance: T, _ url: String, _ child: [String: String]) {
+        let template = urlTemplateFromFull(instance, url)
+        let property = self.urlTemplateToProperty[template]! as! CollectionPropertyMapping<T, CollectionItem>
+        updateChild(instance, property, property.codec.decode(child))
+    }
+
+    func removeChild<U>(instance: T, _ property: CollectionPropertyMapping<T, U>, _ child: U) {
+        property.removeChild(instance, child: child)
+    }
+
+    func removeChild(instance: T, _ url: String, _ child: [String: String]) {
+        let template = urlTemplateFromFull(instance, url)
+        let property = self.urlTemplateToProperty[template]! as! CollectionPropertyMapping<T, CollectionItem>
+        removeChild(instance, property, property.codec.decode(child))
     }
 
     /*
@@ -104,10 +119,5 @@ class ModelMapping<T>: NSObject {
             result = result.stringByReplacingOccurrencesOfString(keyToken, withString: id);
         }
         return result;
-    }
-
-    private func castCollection<U>(p: PropertyMapping<T>, type: U.Type) -> CollectionPropertyMapping<T, U> {
-
-        return p as! CollectionPropertyMapping<T, U>
     }
 }

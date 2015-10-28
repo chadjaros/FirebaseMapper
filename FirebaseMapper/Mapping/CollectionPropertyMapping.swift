@@ -5,8 +5,6 @@
 
 import Foundation
 
-
-
 protocol Constructable: SingleId {
 
     init(id: String, copy: Self?)
@@ -27,9 +25,9 @@ class CollectionPropertyMapping<ModelType, ChildType: CollectionItem>: PropertyM
     typealias OnChildUpdate = (ModelType, ChildType) -> Void
 
     let getter: Getter
-    let didAdd: OnChildUpdate
-    let didRemove: OnChildUpdate
-    let didChange: OnChildUpdate
+    let didAdd: OnChildUpdate?
+    let didRemove: OnChildUpdate?
+    let didChange: OnChildUpdate?
     let codec: DictionaryCodec<ChildType>
 
     override var isCollection: Bool {
@@ -42,9 +40,9 @@ class CollectionPropertyMapping<ModelType, ChildType: CollectionItem>: PropertyM
             uri: String,
             connectIndicator: ConnectIndicator,
             getter: Getter,
-            didAdd: OnChildUpdate,
-            didRemove: OnChildUpdate,
-            didChange: OnChildUpdate,
+            didAdd: OnChildUpdate?,
+            didRemove: OnChildUpdate?,
+            didChange: OnChildUpdate?,
             codec: DictionaryCodec<ChildType>) {
             
         self.getter = getter
@@ -55,12 +53,6 @@ class CollectionPropertyMapping<ModelType, ChildType: CollectionItem>: PropertyM
         super.init(uri, connectIndicator)
     }
 
-    override var containedType: Any.Type {
-        get {
-            return ChildType.self
-        }
-    }
-
     func get(instance: ModelType) -> MutableFirebaseCollection<ChildType> {
         return getter(instance)
     }
@@ -68,8 +60,27 @@ class CollectionPropertyMapping<ModelType, ChildType: CollectionItem>: PropertyM
     func addChild(instance: ModelType, child: ChildType) {
 
         // Update Collection
-        get(instance).append(child);
+        get(instance).append(child)
 
+        // execute callback
+        if let callback = self.didAdd {
+            callback(instance, child)
+        }
+    }
 
+    func updateChild(instance: ModelType, child: ChildType) {
+
+        get(instance).update(child)
+        if let callback = self.didChange {
+            callback(instance, child)
+        }
+    }
+
+    func removeChild(instance: ModelType, child: ChildType) {
+
+        get(instance).remove(child)
+        if let callback = self.didRemove {
+            callback(instance, child)
+        }
     }
 }
