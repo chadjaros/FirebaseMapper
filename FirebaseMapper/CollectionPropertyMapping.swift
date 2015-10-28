@@ -15,9 +15,19 @@ class CollectionPropertyMapping<T, U:SingleId>: BasePropertyMapping<T> {
     let getter:Getter
     let codec: StringCodec<U>?
 
+    override var isCollection: Bool {
+        get {
+            return true
+        }
+    }
+
     init(_ firebaseUri: String, _ connectIndicator: ConnectIndicator, _ getter: Getter, _ codec: StringCodec<U>? = nil) {
         self.getter = getter
         self.codec = codec
         super.init(firebaseUri, connectIndicator)
+    }
+    
+    func get(instance: T) -> FirebaseCollection<U> {
+        return getter(instance)
     }
 }

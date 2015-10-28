@@ -15,12 +15,16 @@ protocol MultiId: SingleId {
 
 class Mappable<T>: MultiId {
 
-
-
     class func modelMapping() -> ModelMapping<T>!  {
         return nil
     }
-    
+
+    var modelMap: ModelMapping<T> {
+        get {
+            return self.dynamicType.modelMapping()
+        }
+    }
+
     private let _ids: [String: String]
     
     init(id: String) {

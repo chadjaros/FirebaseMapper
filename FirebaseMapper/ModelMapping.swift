@@ -12,8 +12,8 @@ class ModelMapping<T>: NSObject {
 
     let firebaseUriBase:String;
     
-    private let firebaseToProperty: [String: BasePropertyMapping<T>]
-    private let propertyToFirebase: [BasePropertyMapping<T>: String]
+    let urlTemplateToProperty: [String: BasePropertyMapping<T>]
+    private let propertyToUrlTemplate: [BasePropertyMapping<T>: String]
 
     init(firebaseUri: String, properties: [BasePropertyMapping<T>]){
         self.firebaseUriBase = firebaseUri;
@@ -26,10 +26,13 @@ class ModelMapping<T>: NSObject {
             propertyMap[property] = fireUri
         }
         
-        self.firebaseToProperty = firebaseMap
-        self.propertyToFirebase = propertyMap
+        self.urlTemplateToProperty = firebaseMap
+        self.propertyToUrlTemplate = propertyMap
     }
     
+    /*
+     * Convenience methods for managing basic properties
+     */
     func get<U>(instance: T, _ property: PropertyMapping<T, U>) -> U {
         return property.get(instance);
     }
@@ -40,20 +43,33 @@ class ModelMapping<T>: NSObject {
     
     func get<U>(instance: T, _ firebaseUri: String) -> U {
         let template = firebaseUriTemplateFromFull(instance, firebaseUri)
-        return get(instance, self.firebaseToProperty[template] as! PropertyMapping<T, U>);
+        return get(instance, self.urlTemplateToProperty[template] as! PropertyMapping<T, U>);
     }
     
-    func set<U>(instance: T, _ firebaseUri: String, value: U) {
+    func set<U>(instance: T, _ firebaseUri: String, _ value: U) {
         let template = firebaseUriTemplateFromFull(instance, firebaseUri)
-        set(instance, self.firebaseToProperty[template] as! PropertyMapping<T, U>, value);
+        set(instance, self.urlTemplateToProperty[template] as! PropertyMapping<T, U>, value);
+    }
+
+    /*
+     * Convenience methods for managing collection properties
+     */
+    
+    func get<U>(instance: T, _ property: CollectionPropertyMapping<T, U>) -> FirebaseCollection<U> {
+        return property.get(instance);
     }
     
+    
+    /*
+     * Convenience methods for dealing with URIs
+     */
+
     func firebaseUri(instance: T, _ property: BasePropertyMapping<T>) -> String {
         return firebaseUriFullFromTemplate(instance, firebaseUriTemplate(property));
     }
     
     func firebaseUriTemplate(property: BasePropertyMapping<T>) -> String {
-        return self.propertyToFirebase[property]!;
+        return self.propertyToUrlTemplate[property]!;
     }
     
     private func firebaseUriTemplateFromFull(instance: T, _ uri: String) -> String {

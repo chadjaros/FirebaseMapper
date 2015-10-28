@@ -20,13 +20,23 @@ class TestModel: Mappable<TestModel> {
             "/color",
             { return $0.delegate.didTestModelUpdateColor != nil },
             { return $0.color },
-            { $0.color = $1 }
+            {
+                $0.color = $1
+                if let callback = $0.delegate.didTestModelUpdateColor {
+                    callback($0)
+                }
+            }
     )
     static let sizeProperty = PropertyMapping<TestModel, Double>(
             "/size",
             { return $0.delegate.didTestModelUpdateSize != nil },
             { return $0.size },
-            { $0.size = $1 }
+            {
+                $0.size = $1
+                if let callback = $0.delegate.didTestModelUpdateSize {
+                    callback($0)
+                }
+            }
     )
     static let linesProperty = CollectionPropertyMapping<TestModel, Line>(
             "/lines",
@@ -50,6 +60,7 @@ class TestModel: Mappable<TestModel> {
     }
 
     private let delegate: TestModelDelegate
+    private var firebase: FirebaseConnection<TestModel>!
 
     private(set) var color: String
     private(set) var size: Double
@@ -60,7 +71,25 @@ class TestModel: Mappable<TestModel> {
         self.color = ""
         self.size = 0.0
         self.lines = MutableFirebaseCollection<Line>()
+        self.firebase = nil
         super.init(id:id)
+        self.firebase = FirebaseConnection(self)
+    }
+
+    func start() {
+        self.firebase.start()
+    }
+
+    func stop() {
+        self.firebase.stop()
+    }
+
+    func updateColor(value: String) {
+        firebase.updateValue(TestModel.colorProperty, value)
+    }
+
+    func updateSize(value: Double) {
+        firebase.updateValue(TestModel.sizeProperty, value)
     }
 
 

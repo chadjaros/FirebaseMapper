@@ -11,6 +11,11 @@ class BasePropertyMapping<T>: NSObject {
 
     let firebaseUri:String;
     let connectIndicator: ConnectIndicator
+    var isCollection: Bool {
+        get {
+            return false
+        }
+    }
 
     init(_ firebaseUri: String, _ connectIndicator: ConnectIndicator) {
         self.firebaseUri = firebaseUri
