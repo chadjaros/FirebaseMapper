@@ -21,19 +21,19 @@ final class Line: CollectionItem {
     }
 }
 
-class LineCodec: DictionaryCodec<Line> {
+class LineCodec: FirebaseValueCodec<Line> {
 
-    override func encode(toEncode: Line) -> [String: String] {
-        return [
+    override func encode(toEncode: Line) -> FirebaseValue {
+        return FirebaseValue([
             "id": toEncode.id,
             "color": toEncode.color
-        ]
+        ])
     }
     
-    override func decode(toDecode: [String: String]) -> Line {
+    override func decode(toDecode: FirebaseValue) -> Line {
         return Line(
-            id: toDecode["id"] ?? "",
-            color: toDecode["color"] ?? ""
+            id: toDecode.dictionary["id"] as? String ?? "",
+            color: toDecode.dictionary["color"] as? String ?? ""
         )
     }
     

@@ -28,7 +28,7 @@ class CollectionPropertyMapping<ModelType, ChildType: CollectionItem>: PropertyM
     let didAdd: OnChildUpdate?
     let didRemove: OnChildUpdate?
     let didChange: OnChildUpdate?
-    let codec: DictionaryCodec<ChildType>
+    let codec: FirebaseValueCodec<ChildType>
 
     override var isCollection: Bool {
         get {
@@ -43,7 +43,7 @@ class CollectionPropertyMapping<ModelType, ChildType: CollectionItem>: PropertyM
             didAdd: OnChildUpdate?,
             didRemove: OnChildUpdate?,
             didChange: OnChildUpdate?,
-            codec: DictionaryCodec<ChildType>) {
+            codec: FirebaseValueCodec<ChildType>) {
             
         self.getter = getter
         self.didAdd = didAdd

@@ -26,8 +26,8 @@ class FirebaseConnection<T> {
     func start() {
         for (_, property) in mapping.urlTemplateToProperty {
             if(property.connectIndicator(self.instance)) {
-                let url = self.mapping.fullUrl(self.instance, property)
-                let propertyFirebase = Firebase(url: url)
+                let url = self.mapping.fullUrlForProperty(self.instance, property)
+                let propertyFirebase = FirebaseConnectionService.provider.createFirebase(url)
                 firebases[url] = propertyFirebase
                 if (property.isCollection) {
                     propertyFirebase.observeEventType(.ChildAdded, withBlock: didAddChild)
@@ -47,55 +47,51 @@ class FirebaseConnection<T> {
         }
     }
 
-    // data.value can be
-    // - String
-    // - Number
-    // - Dictionary<String, String|Number|Dictionary>
-    //
-    // TODO: Need to handle these intelligently
-
     private func didUpdateValue(data: FDataSnapshot!)  {
         let firebaseUrl = data.ref.description
-        self.mapping.set(self.instance, firebaseUrl, data.value)
+        let property = self.mapping.propertyForFullUrl(self.instance, firebaseUrl) as! SimplePropertyMapping<T, AnyObject>
+        self.mapping.set(self.instance, property, property.codec.decode(FirebaseValue(data.value)))
     }
 
     func updateValue<U>(property: SimplePropertyMapping<T, U>, _ value: U) {
-        let firebase = firebases[self.mapping.fullUrl(self.instance, property)]
-        firebase?.setValue(value as! AnyObject)
+        let firebase = firebases[self.mapping.fullUrlForProperty(self.instance, property)]
+        firebase?.setValue(property.codec.encode(value).value)
     }
 
     private func didAddChild(data: FDataSnapshot!)  {
         let firebaseUrl = data.ref.description
-        self.mapping.addChild(self.instance, firebaseUrl, data.value as! [String: String])
+        let property = self.mapping.propertyForFullUrl(self.instance, firebaseUrl) as! CollectionPropertyMapping<T, CollectionItem>
+        self.mapping.addChild(instance, property, property.codec.decode(FirebaseValue(data.value)))
     }
 
-    func createChild<U>(property: CollectionPropertyMapping<T, U>, value: U) -> U {
-        let firebase = firebases[self.mapping.fullUrl(self.instance, property)]
+    func createChild<U>(property: CollectionPropertyMapping<T, U>, value: U) {
+        let firebase = firebases[self.mapping.fullUrlForProperty(self.instance, property)]
         let childFirebase = firebase!.childByAutoId()
         let value = U(id: childFirebase.key, copy: value)
-        childFirebase.setValue(property.codec.encode(value) as AnyObject)
-        return value
+        childFirebase.setValue(property.codec.encode(value).value)
     }
 
     private func didRemoveChild(data: FDataSnapshot!)  {
         let firebaseUrl = data.ref.description
-        self.mapping.removeChild(self.instance, firebaseUrl, data.value as! [String: String])
+        let property = self.mapping.propertyForFullUrl(self.instance, firebaseUrl) as! CollectionPropertyMapping<T, CollectionItem>
+        self.mapping.removeChild(instance, property, property.codec.decode(FirebaseValue(data.value)))
     }
 
     func removeChild<U>(property: CollectionPropertyMapping<T, U>, _ value: U) {
-        let firebase = firebases[self.mapping.fullUrl(self.instance, property)]
+        let firebase = firebases[self.mapping.fullUrlForProperty(self.instance, property)]
         let childFirebase = firebase?.childByAppendingPath(value.id)
         childFirebase?.removeValue()
     }
 
     private func didUpdateChild(data: FDataSnapshot!)  {
         let firebaseUrl = data.ref.description
-        self.mapping.updateChild(self.instance, firebaseUrl, data.value as! [String: String])
+        let property = self.mapping.propertyForFullUrl(self.instance, firebaseUrl) as! CollectionPropertyMapping<T, CollectionItem>
+        self.mapping.updateChild(instance, property, property.codec.decode(FirebaseValue(data.value)))
     }
 
     func upsertChild<U>(property: CollectionPropertyMapping<T, U>, _ value: U) {
-        let firebase = firebases[self.mapping.fullUrl(self.instance, property)]
+        let firebase = firebases[self.mapping.fullUrlForProperty(self.instance, property)]
         let childFirebase = firebase?.childByAppendingPath(value.id)
-        childFirebase?.setValue(property.codec.encode(value) as AnyObject)
+        childFirebase?.setValue(property.codec.encode(value).value)
     }
 }

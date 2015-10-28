@@ -5,6 +5,8 @@
 
 import Foundation
 
-class DictionaryCodec<T>: Codec<T, [String: String]> {
+typealias SimpleDictionary = [String: AnyObject]
+
+class DictionaryCodec<T>: Codec<T, SimpleDictionary> {
 
 }

@@ -17,7 +17,7 @@ class SimplePropertyMapping<ModelType, PropertyType>: PropertyMapping<ModelType>
     let setter: Setter
     let getter: Getter
     let didUpdate: OnValueUpdate?
-    let codec: StringCodec<PropertyType>?
+    let codec: FirebaseValueCodec<PropertyType>
 
     init(
             uri: String,
@@ -25,7 +25,7 @@ class SimplePropertyMapping<ModelType, PropertyType>: PropertyMapping<ModelType>
             getter: Getter,
             setter: Setter,
             didUpdate: OnValueUpdate? = nil,
-            codec: StringCodec<PropertyType>? = nil) {
+            codec: FirebaseValueCodec<PropertyType> = DefaultFirebaseValueCodec<PropertyType>()) {
 
         self.getter = getter
         self.setter = setter
@@ -46,16 +46,6 @@ class SimplePropertyMapping<ModelType, PropertyType>: PropertyMapping<ModelType>
         // Notify caller
         if let notify = self.didUpdate {
             notify(instance)
-        }
-    }
-
-    func getEncoded(instance: ModelType) -> String! {
-        return codec?.encode(getter(instance))
-    }
-
-    func setEncoded(instance: ModelType, value: String) {
-        if(codec != nil) {
-            set(instance, value: codec!.decode(value))
         }
     }
 }

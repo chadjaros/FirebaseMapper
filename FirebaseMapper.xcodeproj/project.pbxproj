@@ -11,6 +11,8 @@
 		2E93405DFF43F2B1B1C1DB28 /* FirebaseCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934538A61F2045CB8330BD /* FirebaseCollection.swift */; };
 		2E934078FDF7ED51FA1DA657 /* CollectionPropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934FE8CD06BAEF2964723E /* CollectionPropertyMapping.swift */; };
 		2E93453DCA2E6FBBF958F8FC /* DictionaryCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9343EB4CA9FAFCB4AE58E8 /* DictionaryCodec.swift */; };
+		2E9346EA64CCF9B780DC4D3A /* FirebaseValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934B339102D74736739923 /* FirebaseValue.swift */; };
+		2E934811641CBC0D8608FB3D /* FirebaseValueCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934137F99C454D77DB477C /* FirebaseValueCodec.swift */; };
 		2E93489BC9668DE9921FA93A /* SimplePropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934F849831E834E156EA39 /* SimplePropertyMapping.swift */; settings = {ASSET_TAGS = (); }; };
 		2E9348F57759D0E4497EDFC7 /* FirebaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93491771B258384F46EB40 /* FirebaseConnection.swift */; };
 		2E934B1DA9EA5A627F6315BE /* FirebaseMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9342B2AF824AEDA50BB98B /* FirebaseMappable.swift */; };
@@ -38,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E934137F99C454D77DB477C /* FirebaseValueCodec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseValueCodec.swift; sourceTree = "<group>"; };
 		2E9342B2AF824AEDA50BB98B /* FirebaseMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseMappable.swift; sourceTree = "<group>"; };
 		2E9343EB4CA9FAFCB4AE58E8 /* DictionaryCodec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryCodec.swift; sourceTree = "<group>"; };
 		2E93446D8ADF1E38ABEE24D0 /* FirebaseConnectionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseConnectionProvider.swift; sourceTree = "<group>"; };
@@ -45,6 +48,7 @@
 		2E9345E61494A75EBA9F3AD9 /* ModelMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelMapping.swift; sourceTree = "<group>"; };
 		2E93461648F9F13995B2C646 /* PropertyMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyMapping.swift; sourceTree = "<group>"; };
 		2E93491771B258384F46EB40 /* FirebaseConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseConnection.swift; sourceTree = "<group>"; };
+		2E934B339102D74736739923 /* FirebaseValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseValue.swift; sourceTree = "<group>"; };
 		2E934CAAFC30A3CF3C6900AA /* Mappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mappable.swift; sourceTree = "<group>"; };
 		2E934D14D11C6BCFFF2A42F1 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		2E934F849831E834E156EA39 /* SimplePropertyMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePropertyMapping.swift; sourceTree = "<group>"; };
@@ -101,6 +105,7 @@
 				637EED781BE017DF005F3032 /* Codec.swift */,
 				637EED791BE017DF005F3032 /* StringCodec.swift */,
 				2E9343EB4CA9FAFCB4AE58E8 /* DictionaryCodec.swift */,
+				2E934137F99C454D77DB477C /* FirebaseValueCodec.swift */,
 			);
 			name = Codecs;
 			sourceTree = "<group>";
@@ -146,6 +151,7 @@
 				2E9343CB5E24383749862D0F /* Mapping */,
 				2E9342B2AF824AEDA50BB98B /* FirebaseMappable.swift */,
 				2E93446D8ADF1E38ABEE24D0 /* FirebaseConnectionProvider.swift */,
+				2E934B339102D74736739923 /* FirebaseValue.swift */,
 			);
 			path = FirebaseMapper;
 			sourceTree = "<group>";
@@ -333,6 +339,8 @@
 				2E934B1DA9EA5A627F6315BE /* FirebaseMappable.swift in Sources */,
 				2E934C94CCBA0F2C27A180EC /* FirebaseConnectionProvider.swift in Sources */,
 				2E93453DCA2E6FBBF958F8FC /* DictionaryCodec.swift in Sources */,
+				2E9346EA64CCF9B780DC4D3A /* FirebaseValue.swift in Sources */,
+				2E934811641CBC0D8608FB3D /* FirebaseValueCodec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

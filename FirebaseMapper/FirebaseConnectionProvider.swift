@@ -4,18 +4,22 @@
 //
 
 import Foundation
+import Firebase
 
 protocol FirebaseConnectionProvider {
 
     func createConnection<T>(instance: T) -> FirebaseConnection<T>
+    func createFirebase(url: String) -> Firebase
 }
 
 class DefaultFirebaseConnectionProvider: FirebaseConnectionProvider {
 
-    static let INSTANCE = DefaultFirebaseConnectionProvider()
-
     func createConnection<T>(instance: T) -> FirebaseConnection<T> {
         return FirebaseConnection<T>(instance)
+    }
+
+    func createFirebase(url: String) -> Firebase {
+        return Firebase(url: url)
     }
 }
 

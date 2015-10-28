@@ -103,8 +103,8 @@ class TestModel: FirebaseMappable<TestModel> {
         }
     }
 
-    func createLine(line: Line) -> Line {
-        return firebase.createChild(TestModel.linesProperty, value: line)
+    func createLine(line: Line) {
+        firebase.createChild(TestModel.linesProperty, value: line)
     }
 
     func updateLine(line: Line) {

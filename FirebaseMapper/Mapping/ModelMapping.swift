@@ -45,11 +45,6 @@ class ModelMapping<T>: NSObject {
     func set<U>(instance: T, _ property: SimplePropertyMapping<T, U>, _ value: U) {
         property.set(instance, value: value);
     }
-    
-    func set<U>(instance: T, _ url: String, _ value: U) {
-        let template = urlTemplateFromFull(instance, url)
-        set(instance, self.urlTemplateToProperty[template] as! SimplePropertyMapping<T, U>, value);
-    }
 
     /*
      * Convenience methods for managing collection properties
@@ -63,42 +58,24 @@ class ModelMapping<T>: NSObject {
         property.addChild(instance, child: child);
     }
 
-    func addChild(instance: T, _ url: String, _ child: [String: String]) {
-        let template = urlTemplateFromFull(instance, url)
-        let property = self.urlTemplateToProperty[template]! as! CollectionPropertyMapping<T, CollectionItem>
-        addChild(instance, property, property.codec.decode(child))
-    }
-
     func updateChild<U>(instance: T, _ property: CollectionPropertyMapping<T, U>, _ child: U) {
         property.updateChild(instance, child: child)
-    }
-
-    func updateChild(instance: T, _ url: String, _ child: [String: String]) {
-        let template = urlTemplateFromFull(instance, url)
-        let property = self.urlTemplateToProperty[template]! as! CollectionPropertyMapping<T, CollectionItem>
-        updateChild(instance, property, property.codec.decode(child))
     }
 
     func removeChild<U>(instance: T, _ property: CollectionPropertyMapping<T, U>, _ child: U) {
         property.removeChild(instance, child: child)
     }
 
-    func removeChild(instance: T, _ url: String, _ child: [String: String]) {
-        let template = urlTemplateFromFull(instance, url)
-        let property = self.urlTemplateToProperty[template]! as! CollectionPropertyMapping<T, CollectionItem>
-        removeChild(instance, property, property.codec.decode(child))
-    }
-
     /*
      * Convenience methods for dealing with URIs
      */
 
-    func fullUrl(instance: T, _ property: PropertyMapping<T>) -> String {
-        return fullUrlFromTemplate(instance, urlTemplate(property));
+    func fullUrlForProperty(instance: T, _ property: PropertyMapping<T>) -> String {
+        return fullUrlFromTemplate(instance, self.propertyToUrlTemplate[property]!);
     }
 
-    func urlTemplate(property: PropertyMapping<T>) -> String {
-        return self.propertyToUrlTemplate[property]!;
+    func propertyForFullUrl(instance: T, _ uri: String) -> PropertyMapping<T> {
+        return self.urlTemplateToProperty[self.urlTemplateFromFull(instance, uri)]!;
     }
 
     private func urlTemplateFromFull(instance: T, _ uri: String) -> String {
