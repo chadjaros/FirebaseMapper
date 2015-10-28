@@ -1,5 +1,5 @@
 //
-//  PropertyMapping.swift
+//  SimplePropertyMapping.swift
 //  SwiftMapper
 //
 //  Created by Chad Jaros on 10/26/15.
@@ -8,20 +8,20 @@
 
 import UIKit
 
-class PropertyMapping<T, U>: BasePropertyMapping<T> {
+class SimplePropertyMapping<T, U>: PropertyMapping<T> {
 
     typealias Setter = (T, U) -> Void
     typealias Getter = (T) -> U
 
-    let setter:Setter
-    let getter:Getter
+    let setter: Setter
+    let getter: Getter
     let codec: StringCodec<U>?
 
-    init(_ firebaseUri: String, _ connectIndicator: ConnectIndicator, _ getter: Getter, _ setter: Setter, _ codec: StringCodec<U>? = nil) {
+    init(_ uri: String, _ connectIndicator: ConnectIndicator, _ getter: Getter, _ setter: Setter, _ codec: StringCodec<U>? = nil) {
         self.getter = getter
         self.setter = setter
         self.codec = codec
-        super.init(firebaseUri, connectIndicator)
+        super.init(uri, connectIndicator)
     }
 
     func get(instance: T) -> U {

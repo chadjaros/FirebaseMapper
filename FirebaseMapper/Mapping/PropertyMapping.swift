@@ -5,11 +5,11 @@
 
 import Foundation
 
-class BasePropertyMapping<T>: NSObject {
+class PropertyMapping<T>: NSObject {
 
     typealias ConnectIndicator = (T) -> Bool
 
-    let firebaseUri:String;
+    let uri: String;
     let connectIndicator: ConnectIndicator
     var isCollection: Bool {
         get {
@@ -17,8 +17,8 @@ class BasePropertyMapping<T>: NSObject {
         }
     }
 
-    init(_ firebaseUri: String, _ connectIndicator: ConnectIndicator) {
-        self.firebaseUri = firebaseUri
+    init(_ uri: String, _ connectIndicator: ConnectIndicator) {
+        self.uri = uri
         self.connectIndicator = connectIndicator
     }
 }

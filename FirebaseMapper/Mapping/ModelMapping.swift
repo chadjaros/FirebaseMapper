@@ -10,45 +10,45 @@ import UIKit
 
 class ModelMapping<T>: NSObject {
 
-    let firebaseUriBase:String;
+    let urlBase:String;
     
-    let urlTemplateToProperty: [String: BasePropertyMapping<T>]
-    private let propertyToUrlTemplate: [BasePropertyMapping<T>: String]
+    let urlTemplateToProperty: [String: PropertyMapping<T>]
+    private let propertyToUrlTemplate: [PropertyMapping<T>: String]
 
-    init(firebaseUri: String, properties: [BasePropertyMapping<T>]){
-        self.firebaseUriBase = firebaseUri;
-        var firebaseMap = [String: BasePropertyMapping<T>]()
-        var propertyMap = Dictionary<BasePropertyMapping<T>, String>()
+    init(uri: String, properties: [PropertyMapping<T>]){
+        self.urlBase = uri;
+        var urlMap = [String: PropertyMapping<T>]()
+        var propertyMap = Dictionary<PropertyMapping<T>, String>()
 
         for property in properties {
-            let fireUri = self.firebaseUriBase + property.firebaseUri
-            firebaseMap[fireUri] = property
-            propertyMap[property] = fireUri
+            let urlTemplate = self.urlBase + property.uri
+            urlMap[urlTemplate] = property
+            propertyMap[property] = urlTemplate
         }
         
-        self.urlTemplateToProperty = firebaseMap
+        self.urlTemplateToProperty = urlMap
         self.propertyToUrlTemplate = propertyMap
     }
     
     /*
      * Convenience methods for managing basic properties
      */
-    func get<U>(instance: T, _ property: PropertyMapping<T, U>) -> U {
+    func get<U>(instance: T, _ property: SimplePropertyMapping<T, U>) -> U {
         return property.get(instance);
     }
 
-    func set<U>(instance: T, _ property: PropertyMapping<T, U>, _ value: U) {
+    func set<U>(instance: T, _ property: SimplePropertyMapping<T, U>, _ value: U) {
         property.set(instance, value: value);
     }
     
     func get<U>(instance: T, _ firebaseUri: String) -> U {
-        let template = firebaseUriTemplateFromFull(instance, firebaseUri)
-        return get(instance, self.urlTemplateToProperty[template] as! PropertyMapping<T, U>);
+        let template = urlTemplateFromFull(instance, firebaseUri)
+        return get(instance, self.urlTemplateToProperty[template] as! SimplePropertyMapping<T, U>);
     }
     
     func set<U>(instance: T, _ firebaseUri: String, _ value: U) {
-        let template = firebaseUriTemplateFromFull(instance, firebaseUri)
-        set(instance, self.urlTemplateToProperty[template] as! PropertyMapping<T, U>, value);
+        let template = urlTemplateFromFull(instance, firebaseUri)
+        set(instance, self.urlTemplateToProperty[template] as! SimplePropertyMapping<T, U>, value);
     }
 
     /*
@@ -64,15 +64,15 @@ class ModelMapping<T>: NSObject {
      * Convenience methods for dealing with URIs
      */
 
-    func firebaseUri(instance: T, _ property: BasePropertyMapping<T>) -> String {
-        return firebaseUriFullFromTemplate(instance, firebaseUriTemplate(property));
+    func fullUrl(instance: T, _ property: PropertyMapping<T>) -> String {
+        return fullUrlFromTemplate(instance, urlTemplate(property));
     }
     
-    func firebaseUriTemplate(property: BasePropertyMapping<T>) -> String {
+    func urlTemplate(property: PropertyMapping<T>) -> String {
         return self.propertyToUrlTemplate[property]!;
     }
     
-    private func firebaseUriTemplateFromFull(instance: T, _ uri: String) -> String {
+    private func urlTemplateFromFull(instance: T, _ uri: String) -> String {
         var result = uri;
         let ids = (instance as! MultiId).ids;
         for (key, id) in ids {
@@ -82,7 +82,7 @@ class ModelMapping<T>: NSObject {
         return result;
     }
 
-    private func firebaseUriFullFromTemplate(instance: T, _ uri: String) -> String {
+    private func fullUrlFromTemplate(instance: T, _ uri: String) -> String {
         var result = uri;
         let ids = (instance as! MultiId).ids;
         for (key, id) in ids {

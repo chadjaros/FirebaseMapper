@@ -7,17 +7,17 @@ import Foundation
 
 class TestModel: Mappable<TestModel> {
 
-    static let colorProperty = PropertyMapping<TestModel, String>(
+    static let colorProperty = SimplePropertyMapping<TestModel, String>(
             "/color",
             { return $0.color },
             { $0.color = $1 }
     )
-    static let sizeProperty = PropertyMapping<TestModel, Double>(
+    static let sizeProperty = SimplePropertyMapping<TestModel, Double>(
             "/size",
             { return $0.size },
             { $0.size = $1 }
     )
-    static let countProperty = PropertyMapping<TestModel, Int>(
+    static let countProperty = SimplePropertyMapping<TestModel, Int>(
             "/count",
             { return $0.count },
             { $0.count = $1 }
@@ -25,7 +25,7 @@ class TestModel: Mappable<TestModel> {
     override class func classMap() -> ModelMapping<TestModel> {
 
         return ModelMapping<TestModel>(
-            firebaseUri: "http://my.firebase.com/testModel/{id}",
+            uri: "http://my.firebase.com/testModel/{id}",
             properties: [
                 colorProperty,
                 sizeProperty,

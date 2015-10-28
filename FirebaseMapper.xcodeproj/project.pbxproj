@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E9340551F65D38E0F62F91E /* CollectionPropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934BD5C6E8B535E2B4AE68 /* CollectionPropertyMapping.swift */; };
+		2E934013F22F48814CDC6686 /* PropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93461648F9F13995B2C646 /* PropertyMapping.swift */; };
 		2E93405DFF43F2B1B1C1DB28 /* FirebaseCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934538A61F2045CB8330BD /* FirebaseCollection.swift */; };
-		2E93425145C251C96CF95D97 /* BasePropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934A784E25C306F72C4040 /* BasePropertyMapping.swift */; };
+		2E934078FDF7ED51FA1DA657 /* CollectionPropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934FE8CD06BAEF2964723E /* CollectionPropertyMapping.swift */; };
+		2E93489BC9668DE9921FA93A /* SimplePropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934F849831E834E156EA39 /* SimplePropertyMapping.swift */; settings = {ASSET_TAGS = (); }; };
 		2E9348F57759D0E4497EDFC7 /* FirebaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93491771B258384F46EB40 /* FirebaseConnection.swift */; };
 		2E934B380ABA00A1D13BFCA5 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934D14D11C6BCFFF2A42F1 /* Line.swift */; };
+		2E934CE74529D2C6FE3371EC /* ModelMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9345E61494A75EBA9F3AD9 /* ModelMapping.swift */; settings = {ASSET_TAGS = (); }; };
+		2E934E934EBAB8923503A4F9 /* Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934CAAFC30A3CF3C6900AA /* Mappable.swift */; settings = {ASSET_TAGS = (); }; };
 		32FCB1C2C4CC4660888C9B4D /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E8A38AA0C7C78B5698A227C /* Pods.framework */; };
 		637EED7A1BE017DF005F3032 /* Codec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EED781BE017DF005F3032 /* Codec.swift */; settings = {ASSET_TAGS = (); }; };
 		637EED7B1BE017DF005F3032 /* StringCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637EED791BE017DF005F3032 /* StringCodec.swift */; settings = {ASSET_TAGS = (); }; };
@@ -19,9 +22,6 @@
 		639A98171BE0164100E58345 /* FirebaseMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 639A98161BE0164100E58345 /* FirebaseMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		639A981E1BE0164100E58345 /* FirebaseMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 639A98131BE0164100E58345 /* FirebaseMapper.framework */; settings = {ASSET_TAGS = (); }; };
 		639A98231BE0164100E58345 /* FirebaseMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A98221BE0164100E58345 /* FirebaseMapperTests.swift */; };
-		639A98321BE0166E00E58345 /* ModelMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A982D1BE0166E00E58345 /* ModelMapping.swift */; settings = {ASSET_TAGS = (); }; };
-		639A98331BE0166E00E58345 /* PropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A982E1BE0166E00E58345 /* PropertyMapping.swift */; settings = {ASSET_TAGS = (); }; };
-		639A98351BE0166E00E58345 /* Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A98301BE0166E00E58345 /* Mappable.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,10 +36,13 @@
 
 /* Begin PBXFileReference section */
 		2E934538A61F2045CB8330BD /* FirebaseCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseCollection.swift; sourceTree = "<group>"; };
+		2E9345E61494A75EBA9F3AD9 /* ModelMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelMapping.swift; sourceTree = "<group>"; };
+		2E93461648F9F13995B2C646 /* PropertyMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyMapping.swift; sourceTree = "<group>"; };
 		2E93491771B258384F46EB40 /* FirebaseConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseConnection.swift; sourceTree = "<group>"; };
-		2E934A784E25C306F72C4040 /* BasePropertyMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasePropertyMapping.swift; sourceTree = "<group>"; };
-		2E934BD5C6E8B535E2B4AE68 /* CollectionPropertyMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionPropertyMapping.swift; sourceTree = "<group>"; };
+		2E934CAAFC30A3CF3C6900AA /* Mappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mappable.swift; sourceTree = "<group>"; };
 		2E934D14D11C6BCFFF2A42F1 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		2E934F849831E834E156EA39 /* SimplePropertyMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePropertyMapping.swift; sourceTree = "<group>"; };
+		2E934FE8CD06BAEF2964723E /* CollectionPropertyMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionPropertyMapping.swift; sourceTree = "<group>"; };
 		4E8A38AA0C7C78B5698A227C /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		637EED781BE017DF005F3032 /* Codec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Codec.swift; path = Codecs/Codec.swift; sourceTree = "<group>"; };
 		637EED791BE017DF005F3032 /* StringCodec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringCodec.swift; path = Codecs/StringCodec.swift; sourceTree = "<group>"; };
@@ -50,9 +53,6 @@
 		639A981D1BE0164100E58345 /* FirebaseMapperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FirebaseMapperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		639A98221BE0164100E58345 /* FirebaseMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMapperTests.swift; sourceTree = "<group>"; };
 		639A98241BE0164100E58345 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		639A982D1BE0166E00E58345 /* ModelMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelMapping.swift; sourceTree = "<group>"; };
-		639A982E1BE0166E00E58345 /* PropertyMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyMapping.swift; sourceTree = "<group>"; };
-		639A98301BE0166E00E58345 /* Mappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mappable.swift; sourceTree = "<group>"; };
 		99B81E383007D19E8DB9D83F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A2D2EDD94AB7401F8D182FEA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,6 +77,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E9343CB5E24383749862D0F /* Mapping */ = {
+			isa = PBXGroup;
+			children = (
+				2E93461648F9F13995B2C646 /* PropertyMapping.swift */,
+				2E934FE8CD06BAEF2964723E /* CollectionPropertyMapping.swift */,
+				2E934F849831E834E156EA39 /* SimplePropertyMapping.swift */,
+				2E9345E61494A75EBA9F3AD9 /* ModelMapping.swift */,
+				2E934CAAFC30A3CF3C6900AA /* Mappable.swift */,
+			);
+			path = Mapping;
+			sourceTree = "<group>";
+		};
 		637EED761BE017C6005F3032 /* Codecs */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,15 +132,11 @@
 			children = (
 				639A98161BE0164100E58345 /* FirebaseMapper.h */,
 				639A98181BE0164100E58345 /* Info.plist */,
-				639A98301BE0166E00E58345 /* Mappable.swift */,
-				639A982D1BE0166E00E58345 /* ModelMapping.swift */,
-				639A982E1BE0166E00E58345 /* PropertyMapping.swift */,
 				637EED761BE017C6005F3032 /* Codecs */,
 				637EED771BE017D4005F3032 /* Example */,
-				2E934BD5C6E8B535E2B4AE68 /* CollectionPropertyMapping.swift */,
-				2E934A784E25C306F72C4040 /* BasePropertyMapping.swift */,
 				2E934538A61F2045CB8330BD /* FirebaseCollection.swift */,
 				2E93491771B258384F46EB40 /* FirebaseConnection.swift */,
+				2E9343CB5E24383749862D0F /* Mapping */,
 			);
 			path = FirebaseMapper;
 			sourceTree = "<group>";
@@ -302,17 +310,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				639A98321BE0166E00E58345 /* ModelMapping.swift in Sources */,
 				637EED7A1BE017DF005F3032 /* Codec.swift in Sources */,
 				637EED7D1BE017E4005F3032 /* TestModel.swift in Sources */,
-				639A98331BE0166E00E58345 /* PropertyMapping.swift in Sources */,
 				637EED7B1BE017DF005F3032 /* StringCodec.swift in Sources */,
-				639A98351BE0166E00E58345 /* Mappable.swift in Sources */,
-				2E9340551F65D38E0F62F91E /* CollectionPropertyMapping.swift in Sources */,
-				2E93425145C251C96CF95D97 /* BasePropertyMapping.swift in Sources */,
 				2E93405DFF43F2B1B1C1DB28 /* FirebaseCollection.swift in Sources */,
 				2E934B380ABA00A1D13BFCA5 /* Line.swift in Sources */,
 				2E9348F57759D0E4497EDFC7 /* FirebaseConnection.swift in Sources */,
+				2E934013F22F48814CDC6686 /* PropertyMapping.swift in Sources */,
+				2E934078FDF7ED51FA1DA657 /* CollectionPropertyMapping.swift in Sources */,
+				2E93489BC9668DE9921FA93A /* SimplePropertyMapping.swift in Sources */,
+				2E934CE74529D2C6FE3371EC /* ModelMapping.swift in Sources */,
+				2E934E934EBAB8923503A4F9 /* Mappable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

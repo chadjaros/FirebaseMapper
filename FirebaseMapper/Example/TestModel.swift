@@ -16,7 +16,7 @@ protocol TestModelDelegate {
 
 class TestModel: Mappable<TestModel> {
 
-    static let colorProperty = PropertyMapping<TestModel, String>(
+    static let colorProperty = SimplePropertyMapping<TestModel, String>(
             "/color",
             { return $0.delegate.didTestModelUpdateColor != nil },
             { return $0.color },
@@ -27,7 +27,7 @@ class TestModel: Mappable<TestModel> {
                 }
             }
     )
-    static let sizeProperty = PropertyMapping<TestModel, Double>(
+    static let sizeProperty = SimplePropertyMapping<TestModel, Double>(
             "/size",
             { return $0.delegate.didTestModelUpdateSize != nil },
             { return $0.size },
@@ -48,7 +48,7 @@ class TestModel: Mappable<TestModel> {
             { return $0.lines }
     )
     static let modelMap = ModelMapping<TestModel>(
-        firebaseUri: "http://my.firebase.com/testModel/{id}",
+        uri: "http://my.firebase.com/testModel/{id}",
         properties: [
             colorProperty,
             sizeProperty,

@@ -26,7 +26,7 @@ class FirebaseConnection<T> {
     func start() {
         for (_, property) in mapping.urlTemplateToProperty {
             if(property.connectIndicator(self.instance)) {
-                let url = self.mapping.firebaseUri(self.instance, property)
+                let url = self.mapping.fullUrl(self.instance, property)
                 let propertyFirebase = Firebase(url: url)
                 firebases[url] = propertyFirebase
                 if (property.isCollection) {
@@ -52,8 +52,8 @@ class FirebaseConnection<T> {
         self.mapping.set(self.instance, firebaseUrl, data.value)
     }
 
-    func updateValue<U>(property: PropertyMapping<T, U>, _ value: U) {
-        let firebase = firebases[self.mapping.firebaseUri(self.instance, property)]
+    func updateValue<U>(property: SimplePropertyMapping<T, U>, _ value: U) {
+        let firebase = firebases[self.mapping.fullUrl(self.instance, property)]
         firebase?.setValue(value as! AnyObject)
     }
 

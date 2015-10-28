@@ -5,7 +5,7 @@
 
 import Foundation
 
-class CollectionPropertyMapping<T, U:SingleId>: BasePropertyMapping<T> {
+class CollectionPropertyMapping<T, U:SingleId>: PropertyMapping<T> {
     
     typealias Added = (T, U) -> Void
     typealias Removed = (T, U) -> Void
@@ -21,10 +21,10 @@ class CollectionPropertyMapping<T, U:SingleId>: BasePropertyMapping<T> {
         }
     }
 
-    init(_ firebaseUri: String, _ connectIndicator: ConnectIndicator, _ getter: Getter, _ codec: StringCodec<U>? = nil) {
+    init(_ uri: String, _ connectIndicator: ConnectIndicator, _ getter: Getter, _ codec: StringCodec<U>? = nil) {
         self.getter = getter
         self.codec = codec
-        super.init(firebaseUri, connectIndicator)
+        super.init(uri, connectIndicator)
     }
     
     func get(instance: T) -> FirebaseCollection<U> {
