@@ -9,12 +9,12 @@ import Firebase
 protocol TestModelDelegate {
     var didTestModelUpdateColor: ((TestModel) -> Void)? { get }
     var didTestModelUpdateSize: ((TestModel) -> Void)? { get }
-    var didTestModelAddLine: ((TestModel) -> Void)? { get }
-    var didTestModelRemoveLine: ((TestModel) -> Void)? { get }
-    var didTestModelUpdateLine: ((TestModel) -> Void)? { get }
+    var didTestModelAddLine: ((TestModel, Line) -> Void)? { get }
+    var didTestModelRemoveLine: ((TestModel, Line) -> Void)? { get }
+    var didTestModelUpdateLine: ((TestModel, Line) -> Void)? { get }
 }
 
-class TestModel: Mappable<TestModel> {
+class TestModel: FirebaseMappable<TestModel> {
 
     static let colorProperty = SimplePropertyMapping<TestModel, String>(
             "/color",
@@ -39,13 +39,28 @@ class TestModel: Mappable<TestModel> {
             }
     )
     static let linesProperty = CollectionPropertyMapping<TestModel, Line>(
-            "/lines",
-            { return
+            uri: "/lines",
+            connectIndicator: { return
                 $0.delegate.didTestModelAddLine != nil ||
                 $0.delegate.didTestModelRemoveLine != nil ||
                 $0.delegate.didTestModelUpdateLine != nil
             },
-            { return $0.lines }
+            getter: { return $0.lines },
+            didAdd: { 
+                if let callback = $0.delegate.didTestModelAddLine {
+                    callback($0, $1)
+                }
+            },
+            didRemove: { 
+                if let callback = $0.delegate.didTestModelRemoveLine {
+                    callback($0, $1)
+                }
+            },
+            didChange: {
+                if let callback = $0.delegate.didTestModelUpdateLine {
+                    callback($0, $1)
+                }
+            }
     )
     static let modelMap = ModelMapping<TestModel>(
         uri: "http://my.firebase.com/testModel/{id}",
@@ -60,28 +75,17 @@ class TestModel: Mappable<TestModel> {
     }
 
     private let delegate: TestModelDelegate
-    private var firebase: FirebaseConnection<TestModel>!
 
     private(set) var color: String
     private(set) var size: Double
-    private var lines: MutableFirebaseCollection<Line>
+    private var _lines: MutableFirebaseCollection<Line>
 
     init(id: String, delegate: TestModelDelegate) {
         self.delegate = delegate
         self.color = ""
         self.size = 0.0
-        self.lines = MutableFirebaseCollection<Line>()
-        self.firebase = nil
-        super.init(id:id)
-        self.firebase = FirebaseConnection(self)
-    }
-
-    func start() {
-        self.firebase.start()
-    }
-
-    func stop() {
-        self.firebase.stop()
+        self._lines = MutableFirebaseCollection<Line>()
+        super.init(id)
     }
 
     func updateColor(value: String) {
@@ -92,5 +96,22 @@ class TestModel: Mappable<TestModel> {
         firebase.updateValue(TestModel.sizeProperty, value)
     }
 
+    var lines: FirebaseCollection<Line> {
+        get {
+            return self._lines
+        }
+    }
+
+    func createLine(line: Line) -> Line {
+        return firebase.createChild(TestModel.linesProperty, line)
+    }
+
+    func updateLine(line: Line) {
+        firebase.upsertChild(TestModel.linesProperty, line)
+    }
+
+    func removeLine(line: Line) {
+        firebase.removeChild(TestModel.linesProperty, line)
+    }
 
 }

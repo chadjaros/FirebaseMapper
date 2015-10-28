@@ -5,7 +5,7 @@
 
 import Foundation
 
-class Line: SingleId {
+final class Line: CollectionItem {
 
     let id: String
     let color: String
@@ -14,4 +14,10 @@ class Line: SingleId {
         self.id = id
         self.color = color
     }
+
+    init(id: String, copy: Line? = nil) {
+        self.id = id
+        self.color = copy?.color ?? ""
+    }
+
 }

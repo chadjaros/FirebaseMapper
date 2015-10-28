@@ -5,14 +5,22 @@
 
 import Foundation
 
-class FirebaseCollection<T:SingleId> {
+class FirebaseCollection<T:CollectionItem> {
 
     func value(atIndex: Int) -> T! {
         return nil
     }
 
-    func value(withId: String) -> T! {
+    func value(withKey: String) -> T? {
         return nil
+    }
+
+    func indexForValue(value: T) -> Int! {
+        return nil
+    }
+
+    func containsKey(value: String) -> Bool {
+        return false;
     }
 
     var count: Int {
@@ -20,9 +28,10 @@ class FirebaseCollection<T:SingleId> {
             return 0
         }
     }
+
 }
 
-class MutableFirebaseCollection<T:SingleId>: FirebaseCollection<T> {
+class MutableFirebaseCollection<T:CollectionItem>: FirebaseCollection<T> {
 
     private var orderedCollection: [T]
     private var hashedCollection: [String: Int]
@@ -37,8 +46,18 @@ class MutableFirebaseCollection<T:SingleId>: FirebaseCollection<T> {
         return self.orderedCollection[atIndex]
     }
 
-    override func value(withId: String) -> T {
-        return self.orderedCollection[self.hashedCollection[withId]!]
+    override func value(withKey: String) -> T? {
+        if let index = self.hashedCollection[withKey] {
+            return self.orderedCollection[index]
+        }
+        return nil
+    }
+
+    override func indexForValue(value: T) -> Int {
+        if let index = self.hashedCollection[value.id] {
+            return index
+        }
+        return -1
     }
 
     override var count: Int {
@@ -46,6 +65,7 @@ class MutableFirebaseCollection<T:SingleId>: FirebaseCollection<T> {
             return self.orderedCollection.count
         }
     }
+
 
 
 }

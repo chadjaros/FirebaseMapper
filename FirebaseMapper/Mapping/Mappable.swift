@@ -27,11 +27,11 @@ class Mappable<T>: MultiId {
 
     private let _ids: [String: String]
     
-    init(id: String) {
+    init(_ id: String) {
         self._ids = ["id": id];
     }
     
-    init(id: String, var extraIds: [String: String]) {
+    init(_ id: String, var _ extraIds: [String: String]) {
         extraIds["id"] = id;
         self._ids = extraIds;
     }

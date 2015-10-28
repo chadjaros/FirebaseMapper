@@ -5,15 +5,21 @@
 
 import Foundation
 
-class CollectionPropertyMapping<T, U:SingleId>: PropertyMapping<T> {
-    
-    typealias Added = (T, U) -> Void
-    typealias Removed = (T, U) -> Void
-    typealias Changed = (T, U) -> Void
-    typealias Getter = (T) -> FirebaseCollection<U>
+protocol CollectionItem: SingleId {
 
-    let getter:Getter
-    let codec: StringCodec<U>?
+    init(id: String, copy: Self?)
+}
+
+class CollectionPropertyMapping<T, U: CollectionItem>: PropertyMapping<T> {
+
+    typealias Getter = (T) -> FirebaseCollection<U>
+    typealias CollectionUpdateNotification = (T, U) -> Void
+
+    let getter: Getter
+    let didAdd: CollectionUpdateNotification
+    let didRemove: CollectionUpdateNotification
+    let didChange: CollectionUpdateNotification
+    let codec: Codec<U, [String: String]>?
 
     override var isCollection: Bool {
         get {
@@ -21,8 +27,18 @@ class CollectionPropertyMapping<T, U:SingleId>: PropertyMapping<T> {
         }
     }
 
-    init(_ uri: String, _ connectIndicator: ConnectIndicator, _ getter: Getter, _ codec: StringCodec<U>? = nil) {
+    init(uri: String,
+            connectIndicator: ConnectIndicator,
+            getter: Getter,
+            didAdd: CollectionUpdateNotification,
+            didRemove: CollectionUpdateNotification,
+            didChange: CollectionUpdateNotification,
+            codec: Codec<U, [String: String]>? = nil) {
+            
         self.getter = getter
+        self.didAdd = didAdd
+        self.didRemove = didRemove
+        self.didChange = didChange
         self.codec = codec
         super.init(uri, connectIndicator)
     }

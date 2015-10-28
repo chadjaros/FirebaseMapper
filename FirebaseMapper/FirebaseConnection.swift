@@ -62,18 +62,33 @@ class FirebaseConnection<T> {
 //        
 //
 //    }
-//
+
+    func createChild<U>(property: CollectionPropertyMapping<T, U>) -> U {
+        let firebase = firebases[self.mapping.fullUrl(self.instance, property)]
+        let childFirebase = firebase?.childByAutoId()
+
+    }
+
 //    private func didRemoveChild(data: FDataSnapshot!)  {
 //        let firebaseUrl = data.ref.description
 //        let property = firebases[firebaseUrl]
 //        
 //    }
-//
+
+    func removeChild<U>(property: CollectionPropertyMapping<T, U>, _ value: U) {
+
+    }
+
 //    private func didUpdateChild(data: FDataSnapshot!)  {
 //        let firebaseUrl = data.ref.description
 //        let property = firebases[firebaseUrl]
 //        
 //    }
 
-    
+    func upsertChild<U>(property: CollectionPropertyMapping<T, U>, _ value: U) {
+        let firebase = firebases[self.mapping.fullUrl(self.instance, property)]
+        let childFirebase = firebase?.childByAppendingPath(value.id)
+
+    }
+
 }
