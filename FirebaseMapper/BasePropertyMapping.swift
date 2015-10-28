@@ -7,9 +7,13 @@ import Foundation
 
 class BasePropertyMapping<T>: NSObject {
 
-    let firebaseUri:String;
+    typealias ConnectIndicator = (T) -> Bool
 
-    init(_ firebaseUri: String) {
-        self.firebaseUri = firebaseUri;
+    let firebaseUri:String;
+    let connectIndicator: ConnectIndicator
+
+    init(_ firebaseUri: String, _ connectIndicator: ConnectIndicator) {
+        self.firebaseUri = firebaseUri
+        self.connectIndicator = connectIndicator
     }
 }

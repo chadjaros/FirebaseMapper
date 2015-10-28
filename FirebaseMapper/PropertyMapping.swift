@@ -10,18 +10,18 @@ import UIKit
 
 class PropertyMapping<T, U>: BasePropertyMapping<T> {
 
-    typealias Setter = (T, U) -> Void;
-    typealias Getter = (T) -> U;
+    typealias Setter = (T, U) -> Void
+    typealias Getter = (T) -> U
 
-    let setter:Setter;
-    let getter:Getter;
-    let codec: StringCodec<U>?;
+    let setter:Setter
+    let getter:Getter
+    let codec: StringCodec<U>?
 
-    init(_ firebaseUri: String, _ getter: Getter, _ setter: Setter, _ codec: StringCodec<U>? = nil) {
+    init(_ firebaseUri: String, _ connectIndicator: ConnectIndicator, _ getter: Getter, _ setter: Setter, _ codec: StringCodec<U>? = nil) {
         self.getter = getter
         self.setter = setter
         self.codec = codec
-        super.init(firebaseUri)
+        super.init(firebaseUri, connectIndicator)
     }
 
     func get(instance: T) -> U {

@@ -5,30 +5,42 @@
 
 import Foundation
 
-protocol IDable {
+protocol SingleId {
     var id: String { get }
-    var ids: [String] { get }
 }
 
-class Mappable<T>: IDable {
+protocol MultiId: SingleId {
+    var ids: [String: String] { get }
+}
+
+class Mappable<T>: MultiId {
+
+
 
     class func modelMapping() -> ModelMapping<T>!  {
         return nil
     }
     
-    let ids: [String]
-    
-    init(ids: [String]) {
-        self.ids = ids;
-    }
+    private let _ids: [String: String]
     
     init(id: String) {
-        self.ids = [id];
+        self._ids = ["id": id];
     }
     
-    var id:String {
+    init(id: String, var extraIds: [String: String]) {
+        extraIds["id"] = id;
+        self._ids = extraIds;
+    }
+
+    var id: String {
         get {
-            return ids[0];
+            return self._ids["id"]!
+        }
+    }
+
+    var ids: [String: String] {
+        get {
+            return self._ids
         }
     }
 }

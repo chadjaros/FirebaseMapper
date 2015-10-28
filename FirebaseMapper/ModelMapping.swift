@@ -12,12 +12,12 @@ class ModelMapping<T>: NSObject {
 
     let firebaseUriBase:String;
     
-    private let firebaseToProperty: Dictionary<String, BasePropertyMapping<T>>
-    private let propertyToFirebase: Dictionary<BasePropertyMapping<T>, String>
+    private let firebaseToProperty: [String: BasePropertyMapping<T>]
+    private let propertyToFirebase: [BasePropertyMapping<T>: String]
 
     init(firebaseUri: String, properties: [BasePropertyMapping<T>]){
         self.firebaseUriBase = firebaseUri;
-        var firebaseMap = Dictionary<String, BasePropertyMapping<T>>()
+        var firebaseMap = [String: BasePropertyMapping<T>]()
         var propertyMap = Dictionary<BasePropertyMapping<T>, String>()
 
         for property in properties {
@@ -58,20 +58,20 @@ class ModelMapping<T>: NSObject {
     
     private func firebaseUriTemplateFromFull(instance: T, _ uri: String) -> String {
         var result = uri;
-        let ids = (instance as! IDable).ids;
-        for var i = 0; i < ids.count; i++ {
-            let idString = String(format:"{id%@}", i == 0 ? "" : String(i))
-            result = result.stringByReplacingOccurrencesOfString(ids[i], withString: idString);
+        let ids = (instance as! MultiId).ids;
+        for (key, id) in ids {
+            let keyToken = String(format:"{%@}", key)
+            result = result.stringByReplacingOccurrencesOfString(id, withString: keyToken);
         }
         return result;
     }
 
     private func firebaseUriFullFromTemplate(instance: T, _ uri: String) -> String {
         var result = uri;
-        let ids = (instance as! IDable).ids;
-        for var i = 0; i < ids.count; i++ {
-            let idString = String(format:"{id%@}", i == 0 ? "" : String(i))
-            result = result.stringByReplacingOccurrencesOfString(idString, withString: ids[i]);
+        let ids = (instance as! MultiId).ids;
+        for (key, id) in ids {
+            let keyToken = String(format:"{%@}", key)
+            result = result.stringByReplacingOccurrencesOfString(keyToken, withString: id);
         }
         return result;
     }

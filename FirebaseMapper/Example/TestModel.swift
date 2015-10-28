@@ -6,43 +6,60 @@
 import Foundation
 import Firebase
 
+protocol TestModelDelegate {
+    var didTestModelUpdateColor: ((TestModel) -> Void)? { get }
+    var didTestModelUpdateSize: ((TestModel) -> Void)? { get }
+    var didTestModelAddLine: ((TestModel) -> Void)? { get }
+    var didTestModelRemoveLine: ((TestModel) -> Void)? { get }
+    var didTestModelUpdateLine: ((TestModel) -> Void)? { get }
+}
+
 class TestModel: Mappable<TestModel> {
 
     static let colorProperty = PropertyMapping<TestModel, String>(
             "/color",
+            { return $0.delegate.didTestModelUpdateColor != nil },
             { return $0.color },
             { $0.color = $1 }
     )
     static let sizeProperty = PropertyMapping<TestModel, Double>(
             "/size",
+            { return $0.delegate.didTestModelUpdateSize != nil },
             { return $0.size },
             { $0.size = $1 }
     )
-    static let countProperty = PropertyMapping<TestModel, Int>(
-            "/count",
-            { return $0.count },
-            { $0.count = $1 }
+    static let linesProperty = CollectionPropertyMapping<TestModel, Line>(
+            "/lines",
+            { return
+                $0.delegate.didTestModelAddLine != nil ||
+                $0.delegate.didTestModelRemoveLine != nil ||
+                $0.delegate.didTestModelUpdateLine != nil
+            },
+            { return $0.lines }
     )
     static let modelMap = ModelMapping<TestModel>(
         firebaseUri: "http://my.firebase.com/testModel/{id}",
         properties: [
             colorProperty,
             sizeProperty,
-            countProperty
+            linesProperty
         ]
     )
     override class func modelMapping() -> ModelMapping<TestModel> {
         return modelMap
     }
 
+    private let delegate: TestModelDelegate
+
     private(set) var color: String
     private(set) var size: Double
-    private(set) var count: Int
+    private var lines: MutableFirebaseCollection<Line>
 
-    init(id: String, color: String, size: Double, count: Int) {
-        self.color = color
-        self.size = size
-        self.count = count
+    init(id: String, delegate: TestModelDelegate) {
+        self.delegate = delegate
+        self.color = ""
+        self.size = 0.0
+        self.lines = MutableFirebaseCollection<Line>()
         super.init(id:id)
     }
 
