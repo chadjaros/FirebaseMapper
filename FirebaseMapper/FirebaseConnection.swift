@@ -30,7 +30,7 @@ class FirebaseConnection<T> {
                 let propertyFirebase = Firebase(url: url)
                 firebases[url] = propertyFirebase
                 if (property.isCollection) {
-//                    propertyFirebase.observeEventType(.ChildAdded, withBlock: didAddChild)
+                    propertyFirebase.observeEventType(.ChildAdded, withBlock: didAddChild)
 //                    propertyFirebase.observeEventType(.ChildRemoved, withBlock: didRemoveChild)
 //                    propertyFirebase.observeEventType(.ChildChanged, withBlock: didUpdateChild)
                 }
@@ -59,8 +59,7 @@ class FirebaseConnection<T> {
 
     private func didAddChild(data: FDataSnapshot!)  {
         let firebaseUrl = data.ref.description
-        //self.mapping.
-
+        self.mapping.addChild(self.instance, firebaseUrl, data.value as! [String: String])
     }
 
     func createChild<U>(property: CollectionPropertyMapping<T, U>, value: U) -> U {
@@ -73,24 +72,23 @@ class FirebaseConnection<T> {
 
 //    private func didRemoveChild(data: FDataSnapshot!)  {
 //        let firebaseUrl = data.ref.description
-//        let property = firebases[firebaseUrl]
-//        
+//        self.mapping.removeChild(self.instance, firebaseUrl, data.value)
 //    }
 
     func removeChild<U>(property: CollectionPropertyMapping<T, U>, _ value: U) {
-
+        let firebase = firebases[self.mapping.fullUrl(self.instance, property)]
+        let childFirebase = firebase?.childByAppendingPath(value.id)
+        childFirebase?.removeValue()
     }
 
 //    private func didUpdateChild(data: FDataSnapshot!)  {
 //        let firebaseUrl = data.ref.description
-//        let property = firebases[firebaseUrl]
-//        
+//        self.mapping.updateChild(self.instance, firebaseUrl, data.value)
 //    }
 
     func upsertChild<U>(property: CollectionPropertyMapping<T, U>, _ value: U) {
         let firebase = firebases[self.mapping.fullUrl(self.instance, property)]
         let childFirebase = firebase?.childByAppendingPath(value.id)
-
+        childFirebase?.setValue(property.codec.encode(value) as AnyObject)
     }
-
 }

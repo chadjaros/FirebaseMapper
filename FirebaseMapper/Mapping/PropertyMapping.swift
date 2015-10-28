@@ -5,9 +5,9 @@
 
 import Foundation
 
-class PropertyMapping<T>: NSObject {
+class PropertyMapping<ModelType>: NSObject {
 
-    typealias ConnectIndicator = (T) -> Bool
+    typealias ConnectIndicator = (ModelType) -> Bool
 
     let uri: String;
     let connectIndicator: ConnectIndicator
@@ -20,5 +20,11 @@ class PropertyMapping<T>: NSObject {
     init(_ uri: String, _ connectIndicator: ConnectIndicator) {
         self.uri = uri
         self.connectIndicator = connectIndicator
+    }
+
+    var containedType: Any.Type {
+        get {
+            return ModelType.self
+        }
     }
 }

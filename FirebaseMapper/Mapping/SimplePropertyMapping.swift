@@ -34,6 +34,12 @@ class SimplePropertyMapping<ModelType, PropertyType>: PropertyMapping<ModelType>
         super.init(uri, connectIndicator)
     }
 
+    override var containedType: Any.Type {
+        get {
+            return PropertyType.self
+        }
+    }
+
     func get(instance: ModelType) -> PropertyType {
         return getter(instance)
     }

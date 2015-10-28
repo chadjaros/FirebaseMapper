@@ -37,18 +37,17 @@ class ModelMapping<T>: NSObject {
         return property.get(instance);
     }
 
-    func set<U>(instance: T, _ property: SimplePropertyMapping<T, U>, _ value: U) {
-        property.set(instance, value: value);
-
-    }
-    
-    func get<U>(instance: T, _ firebaseUri: String) -> U {
-        let template = urlTemplateFromFull(instance, firebaseUri)
+    func get<U>(instance: T, _ url: String) -> U {
+        let template = urlTemplateFromFull(instance, url)
         return get(instance, self.urlTemplateToProperty[template] as! SimplePropertyMapping<T, U>);
     }
+
+    func set<U>(instance: T, _ property: SimplePropertyMapping<T, U>, _ value: U) {
+        property.set(instance, value: value);
+    }
     
-    func set<U>(instance: T, _ firebaseUri: String, _ value: U) {
-        let template = urlTemplateFromFull(instance, firebaseUri)
+    func set<U>(instance: T, _ url: String, _ value: U) {
+        let template = urlTemplateFromFull(instance, url)
         set(instance, self.urlTemplateToProperty[template] as! SimplePropertyMapping<T, U>, value);
     }
 
@@ -56,11 +55,25 @@ class ModelMapping<T>: NSObject {
      * Convenience methods for managing collection properties
      */
     
-    func get<U>(instance: T, _ property: CollectionPropertyMapping<T, U>) -> FirebaseCollection<U> {
+    func get<U>(instance: T, _ property: CollectionPropertyMapping<T, U>) -> MutableFirebaseCollection<U> {
         return property.get(instance);
     }
-    
-    
+
+    func addChild<U>(instance: T, _ property: CollectionPropertyMapping<T, U>, _ child: U) {
+        property.addChild(instance, child: child);
+    }
+
+    func addChild(instance: T, _ url: String, _ child: [String: String]) {
+        let template = urlTemplateFromFull(instance, url)
+        let property = self.urlTemplateToProperty[template]!
+        let v = property as! CollectionPropertyMapping<T, CollectionItem>
+        v.addChild(instance, child: v.codec.decode(child))
+    }
+
+    func addChild<U>(instance: T, _ property: PropertyMapping<T>, _ child: [String: String], type: U.Type) {
+
+    }
+
     /*
      * Convenience methods for dealing with URIs
      */
@@ -68,11 +81,11 @@ class ModelMapping<T>: NSObject {
     func fullUrl(instance: T, _ property: PropertyMapping<T>) -> String {
         return fullUrlFromTemplate(instance, urlTemplate(property));
     }
-    
+
     func urlTemplate(property: PropertyMapping<T>) -> String {
         return self.propertyToUrlTemplate[property]!;
     }
-    
+
     private func urlTemplateFromFull(instance: T, _ uri: String) -> String {
         var result = uri;
         let ids = (instance as! MultiId).ids;
@@ -91,5 +104,10 @@ class ModelMapping<T>: NSObject {
             result = result.stringByReplacingOccurrencesOfString(keyToken, withString: id);
         }
         return result;
+    }
+
+    private func castCollection<U>(p: PropertyMapping<T>, type: U.Type) -> CollectionPropertyMapping<T, U> {
+
+        return p as! CollectionPropertyMapping<T, U>
     }
 }

@@ -7,17 +7,17 @@ import Foundation
 
 final class Line: CollectionItem {
 
-    let id: String
     let color: String
 
     init(id: String, color: String) {
-        self.id = id
         self.color = color
+        super.init(id: id)
     }
 
-    init(id: String, copy: Line? = nil) {
-        self.id = id
-        self.color = copy?.color ?? ""
+    required init(id: String, copy: CollectionItem? = nil) {
+        let cast = copy == nil ? nil : copy as! Line?
+        self.color = cast?.color ?? ""
+        super.init(id: id)
     }
 
 }

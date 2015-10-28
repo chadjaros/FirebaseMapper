@@ -5,7 +5,7 @@
 
 import Foundation
 
-class FirebaseCollection<T:CollectionItem> {
+class FirebaseCollection<T: CollectionItem> {
 
     func value(atIndex: Int) -> T! {
         return nil
@@ -31,7 +31,7 @@ class FirebaseCollection<T:CollectionItem> {
 
 }
 
-class MutableFirebaseCollection<T:CollectionItem>: FirebaseCollection<T> {
+class MutableFirebaseCollection<T: CollectionItem>: FirebaseCollection<T> {
 
     private var orderedCollection: [T]
     private var hashedCollection: [String: Int]
@@ -66,6 +66,24 @@ class MutableFirebaseCollection<T:CollectionItem>: FirebaseCollection<T> {
         }
     }
 
+    func append(child: T) {
+        if(!self.containsKey(child.id)) {
+            let count = self.count
+            self.orderedCollection.append(child)
+            self.hashedCollection[child.id] = count
+        }
+    }
 
+    func update(child: T) {
+        if let index = self.hashedCollection[child.id] {
+            self.orderedCollection[index] = child
+        }
+    }
 
+    func remove(child: T) {
+        if let index = self.hashedCollection[child.id] {
+            self.orderedCollection.removeAtIndex(index)
+            self.hashedCollection.removeValueForKey(child.id)
+        }
+    }
 }

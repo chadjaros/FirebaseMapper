@@ -5,9 +5,20 @@
 
 import Foundation
 
-protocol CollectionItem: SingleId {
+
+
+protocol Constructable: SingleId {
 
     init(id: String, copy: Self?)
+}
+
+class CollectionItem: Constructable {
+
+    let id: String
+
+    required init(id: String, copy: CollectionItem? = nil) {
+        self.id = id
+    }
 }
 
 class CollectionPropertyMapping<ModelType, ChildType: CollectionItem>: PropertyMapping<ModelType> {
@@ -43,8 +54,22 @@ class CollectionPropertyMapping<ModelType, ChildType: CollectionItem>: PropertyM
         self.codec = codec
         super.init(uri, connectIndicator)
     }
-    
+
+    override var containedType: Any.Type {
+        get {
+            return ChildType.self
+        }
+    }
+
     func get(instance: ModelType) -> MutableFirebaseCollection<ChildType> {
         return getter(instance)
+    }
+
+    func addChild(instance: ModelType, child: ChildType) {
+
+        // Update Collection
+        get(instance).append(child);
+
+
     }
 }
