@@ -17,22 +17,22 @@ protocol TestModelDelegate {
 class TestModel: FirebaseMappable<TestModel> {
 
     static let colorProperty = SimplePropertyMapping<TestModel, String>(
-            "/color",
-            { return $0.delegate.didTestModelUpdateColor != nil },
-            { return $0.color },
-            {
-                $0.color = $1
+            uri: "/color",
+            connectIndicator: { return $0.delegate.didTestModelUpdateColor != nil },
+            getter: { return $0.color },
+            setter: { $0.color = $1 },
+            didUpdate: {
                 if let callback = $0.delegate.didTestModelUpdateColor {
                     callback($0)
                 }
             }
     )
     static let sizeProperty = SimplePropertyMapping<TestModel, Double>(
-            "/size",
-            { return $0.delegate.didTestModelUpdateSize != nil },
-            { return $0.size },
-            {
-                $0.size = $1
+            uri: "/size",
+            connectIndicator: { return $0.delegate.didTestModelUpdateSize != nil },
+            getter: { return $0.size },
+            setter: { $0.size = $1 },
+            didUpdate: {
                 if let callback = $0.delegate.didTestModelUpdateSize {
                     callback($0)
                 }
@@ -45,7 +45,7 @@ class TestModel: FirebaseMappable<TestModel> {
                 $0.delegate.didTestModelRemoveLine != nil ||
                 $0.delegate.didTestModelUpdateLine != nil
             },
-            getter: { return $0.lines },
+            getter: { return $0._lines },
             didAdd: { 
                 if let callback = $0.delegate.didTestModelAddLine {
                     callback($0, $1)
@@ -60,7 +60,8 @@ class TestModel: FirebaseMappable<TestModel> {
                 if let callback = $0.delegate.didTestModelUpdateLine {
                     callback($0, $1)
                 }
-            }
+            },
+            codec: LineCodec()
     )
     static let modelMap = ModelMapping<TestModel>(
         uri: "http://my.firebase.com/testModel/{id}",
@@ -103,7 +104,7 @@ class TestModel: FirebaseMappable<TestModel> {
     }
 
     func createLine(line: Line) -> Line {
-        return firebase.createChild(TestModel.linesProperty, line)
+        return firebase.createChild(TestModel.linesProperty, value: line)
     }
 
     func updateLine(line: Line) {

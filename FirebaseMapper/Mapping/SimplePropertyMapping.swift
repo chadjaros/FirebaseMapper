@@ -8,37 +8,54 @@
 
 import UIKit
 
-class SimplePropertyMapping<T, U>: PropertyMapping<T> {
+class SimplePropertyMapping<ModelType, PropertyType>: PropertyMapping<ModelType> {
 
-    typealias Setter = (T, U) -> Void
-    typealias Getter = (T) -> U
+    typealias Setter = (ModelType, PropertyType) -> Void
+    typealias Getter = (ModelType) -> PropertyType
+    typealias OnValueUpdate = (ModelType) -> Void
 
     let setter: Setter
     let getter: Getter
-    let codec: StringCodec<U>?
+    let didUpdate: OnValueUpdate?
+    let codec: StringCodec<PropertyType>?
 
-    init(_ uri: String, _ connectIndicator: ConnectIndicator, _ getter: Getter, _ setter: Setter, _ codec: StringCodec<U>? = nil) {
+    init(
+            uri: String,
+            connectIndicator: ConnectIndicator,
+            getter: Getter,
+            setter: Setter,
+            didUpdate: OnValueUpdate? = nil,
+            codec: StringCodec<PropertyType>? = nil) {
+
         self.getter = getter
         self.setter = setter
+        self.didUpdate = didUpdate
         self.codec = codec
         super.init(uri, connectIndicator)
     }
 
-    func get(instance: T) -> U {
+    func get(instance: ModelType) -> PropertyType {
         return getter(instance)
     }
 
-    func set(instance: T, value: U) {
+    func set(instance: ModelType, value: PropertyType) {
+
+        // Set value
         setter(instance, value)
+
+        // Notify caller
+        if let notify = self.didUpdate {
+            notify(instance)
+        }
     }
 
-    func getEncoded(instance: T) -> String! {
+    func getEncoded(instance: ModelType) -> String! {
         return codec?.encode(getter(instance))
     }
 
-    func setEncoded(instance: T, value: String) {
+    func setEncoded(instance: ModelType, value: String) {
         if(codec != nil) {
-            return setter(instance, codec!.decode(value))
+            set(instance, value: codec!.decode(value))
         }
     }
 }

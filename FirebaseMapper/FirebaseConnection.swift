@@ -57,16 +57,18 @@ class FirebaseConnection<T> {
         firebase?.setValue(value as! AnyObject)
     }
 
-//    private func didAddChild(data: FDataSnapshot!)  {
-//        let firebaseUrl = data.ref.description
-//        
-//
-//    }
+    private func didAddChild(data: FDataSnapshot!)  {
+        let firebaseUrl = data.ref.description
+        //self.mapping.
 
-    func createChild<U>(property: CollectionPropertyMapping<T, U>) -> U {
+    }
+
+    func createChild<U>(property: CollectionPropertyMapping<T, U>, value: U) -> U {
         let firebase = firebases[self.mapping.fullUrl(self.instance, property)]
-        let childFirebase = firebase?.childByAutoId()
-
+        let childFirebase = firebase!.childByAutoId()
+        let value = U(id: childFirebase.key, copy: value)
+        childFirebase.setValue(property.codec.encode(value) as AnyObject)
+        return value
     }
 
 //    private func didRemoveChild(data: FDataSnapshot!)  {

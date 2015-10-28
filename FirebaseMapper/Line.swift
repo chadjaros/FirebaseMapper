@@ -21,3 +21,21 @@ final class Line: CollectionItem {
     }
 
 }
+
+class LineCodec: DictionaryCodec<Line> {
+
+    override func encode(toEncode: Line) -> [String: String] {
+        return [
+            "id": toEncode.id,
+            "color": toEncode.color
+        ]
+    }
+    
+    override func decode(toDecode: [String: String]) -> Line {
+        return Line(
+            id: toDecode["id"] ?? "",
+            color: toDecode["color"] ?? ""
+        )
+    }
+    
+}

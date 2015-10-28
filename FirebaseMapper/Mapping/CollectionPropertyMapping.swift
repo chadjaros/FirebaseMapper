@@ -10,16 +10,16 @@ protocol CollectionItem: SingleId {
     init(id: String, copy: Self?)
 }
 
-class CollectionPropertyMapping<T, U: CollectionItem>: PropertyMapping<T> {
+class CollectionPropertyMapping<ModelType, ChildType: CollectionItem>: PropertyMapping<ModelType> {
 
-    typealias Getter = (T) -> FirebaseCollection<U>
-    typealias CollectionUpdateNotification = (T, U) -> Void
+    typealias Getter = (ModelType) -> MutableFirebaseCollection<ChildType>
+    typealias OnChildUpdate = (ModelType, ChildType) -> Void
 
     let getter: Getter
-    let didAdd: CollectionUpdateNotification
-    let didRemove: CollectionUpdateNotification
-    let didChange: CollectionUpdateNotification
-    let codec: Codec<U, [String: String]>?
+    let didAdd: OnChildUpdate
+    let didRemove: OnChildUpdate
+    let didChange: OnChildUpdate
+    let codec: DictionaryCodec<ChildType>
 
     override var isCollection: Bool {
         get {
@@ -27,13 +27,14 @@ class CollectionPropertyMapping<T, U: CollectionItem>: PropertyMapping<T> {
         }
     }
 
-    init(uri: String,
+    init(
+            uri: String,
             connectIndicator: ConnectIndicator,
             getter: Getter,
-            didAdd: CollectionUpdateNotification,
-            didRemove: CollectionUpdateNotification,
-            didChange: CollectionUpdateNotification,
-            codec: Codec<U, [String: String]>? = nil) {
+            didAdd: OnChildUpdate,
+            didRemove: OnChildUpdate,
+            didChange: OnChildUpdate,
+            codec: DictionaryCodec<ChildType>) {
             
         self.getter = getter
         self.didAdd = didAdd
@@ -43,7 +44,7 @@ class CollectionPropertyMapping<T, U: CollectionItem>: PropertyMapping<T> {
         super.init(uri, connectIndicator)
     }
     
-    func get(instance: T) -> FirebaseCollection<U> {
+    func get(instance: ModelType) -> MutableFirebaseCollection<ChildType> {
         return getter(instance)
     }
 }

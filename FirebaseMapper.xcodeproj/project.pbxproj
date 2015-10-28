@@ -10,6 +10,7 @@
 		2E934013F22F48814CDC6686 /* PropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93461648F9F13995B2C646 /* PropertyMapping.swift */; };
 		2E93405DFF43F2B1B1C1DB28 /* FirebaseCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934538A61F2045CB8330BD /* FirebaseCollection.swift */; };
 		2E934078FDF7ED51FA1DA657 /* CollectionPropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934FE8CD06BAEF2964723E /* CollectionPropertyMapping.swift */; };
+		2E93453DCA2E6FBBF958F8FC /* DictionaryCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9343EB4CA9FAFCB4AE58E8 /* DictionaryCodec.swift */; };
 		2E93489BC9668DE9921FA93A /* SimplePropertyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E934F849831E834E156EA39 /* SimplePropertyMapping.swift */; settings = {ASSET_TAGS = (); }; };
 		2E9348F57759D0E4497EDFC7 /* FirebaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E93491771B258384F46EB40 /* FirebaseConnection.swift */; };
 		2E934B1DA9EA5A627F6315BE /* FirebaseMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9342B2AF824AEDA50BB98B /* FirebaseMappable.swift */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		2E9342B2AF824AEDA50BB98B /* FirebaseMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseMappable.swift; sourceTree = "<group>"; };
+		2E9343EB4CA9FAFCB4AE58E8 /* DictionaryCodec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryCodec.swift; sourceTree = "<group>"; };
 		2E93446D8ADF1E38ABEE24D0 /* FirebaseConnectionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseConnectionProvider.swift; sourceTree = "<group>"; };
 		2E934538A61F2045CB8330BD /* FirebaseCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseCollection.swift; sourceTree = "<group>"; };
 		2E9345E61494A75EBA9F3AD9 /* ModelMapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelMapping.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			children = (
 				637EED781BE017DF005F3032 /* Codec.swift */,
 				637EED791BE017DF005F3032 /* StringCodec.swift */,
+				2E9343EB4CA9FAFCB4AE58E8 /* DictionaryCodec.swift */,
 			);
 			name = Codecs;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				2E934E934EBAB8923503A4F9 /* Mappable.swift in Sources */,
 				2E934B1DA9EA5A627F6315BE /* FirebaseMappable.swift in Sources */,
 				2E934C94CCBA0F2C27A180EC /* FirebaseConnectionProvider.swift in Sources */,
+				2E93453DCA2E6FBBF958F8FC /* DictionaryCodec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

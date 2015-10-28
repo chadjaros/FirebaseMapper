@@ -39,6 +39,7 @@ class ModelMapping<T>: NSObject {
 
     func set<U>(instance: T, _ property: SimplePropertyMapping<T, U>, _ value: U) {
         property.set(instance, value: value);
+
     }
     
     func get<U>(instance: T, _ firebaseUri: String) -> U {
